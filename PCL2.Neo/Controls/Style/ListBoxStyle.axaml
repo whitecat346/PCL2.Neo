@@ -1,0 +1,93 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:pc="using:PCL2.Neo.Controls"
+		xmlns:pca="using:PCL2.Neo.Controls.Attachments">
+  <Design.PreviewWith>
+    <Border Padding="20">
+		<ListBox Width="400" Background="{DynamicResource ColorBrush3}" Classes="navbar">
+			<ListBoxItem Content="11"
+						 pca:PathIcon.Transform="scale(0.9)"
+						 Tag="M955 610h-59c-15 0-29 13-29 29v196c0 15-13 29-29 29h-649c-15 0-29-13-29-29v-196c0-15-13-29-29-29h-59c-15 0-29 13-29 29V905c0 43 35 78 78 78h787c43 0 78-35 78-78V640c0-15-13-29-29-29zM492 740c11 11 29 11 41 0l265-265c11-11 11-29 0-41l-41-41c-11-11-29-11-41 0l-110 110c-11 11-33 3-33-13V68C571 53 555 39 541 39h-59c-15 0-29 13-29 29v417c0 17-21 25-33 13l-110-110c-11-11-29-11-41 0L226 433c-11 11-11 29 0 41L492 740z"/>
+			<ListBoxItem Content="45"
+						 pca:PathIcon.Transform="scale(0.9)"
+						 Tag="M955 610h-59c-15 0-29 13-29 29v196c0 15-13 29-29 29h-649c-15 0-29-13-29-29v-196c0-15-13-29-29-29h-59c-15 0-29 13-29 29V905c0 43 35 78 78 78h787c43 0 78-35 78-78V640c0-15-13-29-29-29zM492 740c11 11 29 11 41 0l265-265c11-11 11-29 0-41l-41-41c-11-11-29-11-41 0l-110 110c-11 11-33 3-33-13V68C571 53 555 39 541 39h-59c-15 0-29 13-29 29v417c0 17-21 25-33 13l-110-110c-11-11-29-11-41 0L226 433c-11 11-11 29 0 41L492 740z"/>
+			<ListBoxItem Content="下载" 
+						 IsSelected="True"
+						 pca:PathIcon.Transform="scale(0.9)"
+						 Tag="M955 610h-59c-15 0-29 13-29 29v196c0 15-13 29-29 29h-649c-15 0-29-13-29-29v-196c0-15-13-29-29-29h-59c-15 0-29 13-29 29V905c0 43 35 78 78 78h787c43 0 78-35 78-78V640c0-15-13-29-29-29zM492 740c11 11 29 11 41 0l265-265c11-11 11-29 0-41l-41-41c-11-11-29-11-41 0l-110 110c-11 11-33 3-33-13V68C571 53 555 39 541 39h-59c-15 0-29 13-29 29v417c0 17-21 25-33 13l-110-110c-11-11-29-11-41 0L226 433c-11 11-11 29 0 41L492 740z"/>
+		</ListBox>
+    </Border>
+  </Design.PreviewWith>
+
+	<Style Selector="ListBox.navbar">
+		<Setter Property="Height" Value="48"/>
+		<Setter Property="Background" Value="Transparent"/>
+		<Setter Property="ItemsPanel">
+			<ItemsPanelTemplate>
+				<StackPanel Spacing="10"
+							Orientation="Horizontal"/>
+			</ItemsPanelTemplate>
+		</Setter>
+		
+		<Setter Property="ItemContainerTheme">
+			<ControlTheme TargetType="ListBoxItem">
+				<Setter Property="Height" Value="27"/>
+				<Setter Property="MinWidth" Value="50"/>
+				<Setter Property="MaxHeight" Value="27"/>
+				<Setter Property="CornerRadius" Value="13.5"/>
+				<Setter Property="Background" Value="Transparent"/>
+				<Setter Property="Transitions">
+					<Transitions>
+						<BrushTransition Property="Background"
+										 Duration="0:0:.15"/>
+					</Transitions>
+				</Setter>
+				
+				<Setter Property="Template">
+					<ControlTemplate>
+						<Border Height="{TemplateBinding Height}"
+								MinWidth="{TemplateBinding MinWidth}"
+								MaxHeight="{TemplateBinding MaxHeight}"
+								Background="{TemplateBinding Background}"
+								CornerRadius="{TemplateBinding CornerRadius}">
+							<StackPanel Spacing="8"
+										Margin="12 0"
+										Orientation="Horizontal">
+								<Path Fill="{DynamicResource ColorBrush8}"
+									  HorizontalAlignment="Left"
+									  MaxHeight="16"
+									  MaxWidth="16"
+									  Name="PART_PathIcon"
+									  Stretch="UniformToFill"
+									  VerticalAlignment="Center"
+									  Data="{TemplateBinding Tag}"
+									  RenderTransform="{TemplateBinding (pca:PathIcon.Transform)}"/>
+								
+								<TextBlock Name="PART_Content"
+										   VerticalAlignment="Center"
+										   Text="{TemplateBinding Content}"
+										   Foreground="{DynamicResource ColorBrush8}"/>
+							</StackPanel>
+						</Border>
+					</ControlTemplate>
+				</Setter>
+
+				<Style Selector="^:pointerover">
+					<Setter Property="Background" Value="#35FFFFFF"/>
+				</Style>
+				
+				<Style Selector="^:selected">
+					<Setter Property="Background" Value="White"/>
+					
+					<Style Selector="^ /template/ Path#PART_PathIcon">
+						<Setter Property="Fill" Value="{DynamicResource ColorBrush3}"/>
+					</Style>
+
+					<Style Selector="^ /template/ TextBlock#PART_Content">
+						<Setter Property="Foreground" Value="{DynamicResource ColorBrush3}"/>
+					</Style>
+				</Style>
+			</ControlTheme>
+		</Setter>
+	</Style>
+</Styles>

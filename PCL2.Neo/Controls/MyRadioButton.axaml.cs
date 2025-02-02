@@ -89,8 +89,8 @@ public class MyRadioButton : TemplatedControl
         HighLight
     }
     
-    public static readonly StyledProperty<ColorState> ColorTypeProperty = AvaloniaProperty.Register<MyRadioButton, ColorState>(
-        nameof(ColorType));
+    public static readonly StyledProperty<ColorState> ColorTypeProperty = 
+        AvaloniaProperty.Register<MyRadioButton, ColorState>(nameof(ColorType));
 
     public ColorState ColorType
     {

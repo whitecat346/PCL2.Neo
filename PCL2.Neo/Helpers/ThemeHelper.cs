@@ -61,7 +61,7 @@ public class ThemeHelper
             Color = new MyColor().FromHsl2(_colorHue + _colorHueTopbarDelta, _colorSat, 48 + _colorLightAdjust)
         });
 
-        _mainWindow.TitleBar.PanTitle.Background = brushTitle;
+        _mainWindow.navBackgroundBorder.Background = brushTitle;
         
         // 背景
         var brushBackground = new LinearGradientBrush
@@ -86,6 +86,6 @@ public class ThemeHelper
             Color = new MyColor().FromHsl2(_colorHue + 20, Math.Min(60, _colorSat) * 0.5, 80)
         });
 
-        _mainWindow.PanForm.Background = brushBackground;
+        _mainWindow.MainBorder.Background = brushBackground;
     }
 }

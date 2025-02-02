@@ -1,45 +1,23 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Media;
+using Avalonia.Markup.Xaml;
 using PCL2.Neo.Helpers;
-using PCL2.Neo.ViewModels;
 
-namespace PCL2.Neo.Views
+namespace PCL2.Neo.Views;
+
+public partial class MainWindow : Window
 {
-    public partial class MainWindow : Window
+    public MainWindow()
     {
-        private ThemeHelper _themeHelper;
-        private MainWindowViewModel _viewModel;
-        
-        public MainWindow()
-        {
-            InitializeComponent();
-            
-            _viewModel = new MainWindowViewModel(this);
-            this.DataContext = _viewModel;
-            
-            _themeHelper = new ThemeHelper(this);
-            _themeHelper.Refresh(); // 刷新主题
+        InitializeComponent();
+        navBackgroundBorder.PointerPressed += OnNavPointerPressed;
+        new ThemeHelper(this).Refresh();
 
-            this.TitleBar.BtnTitleClose.Click += (_, _) => _viewModel.Close();
-            this.TitleBar.BtnTitleMin.Click += (_, _) => _viewModel.Minimize();
+        BtnTitleClose.Click += (_, _) => Close();
+        BtnTitleMin.Click += (_, _) => WindowState = WindowState.Minimized;
+    }
 
-            UpdateClip(); // 圆角
-        }
-
-        private void UpdateClip()
-        {
-            var rect = new Rect(0, 0, this.Width - 36, this.Height - 36);
-            this.BorderForm.Clip = new RectangleGeometry(rect, 6, 6);
-        }
-        
-        private void TitleBar_OnPointerPressed(object? sender, PointerPressedEventArgs e)
-        {
-            if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
-            {
-                BeginMoveDrag(e);
-            }
-        }
+    private void OnNavPointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e) {
+        this.BeginMoveDrag(e);
     }
 }

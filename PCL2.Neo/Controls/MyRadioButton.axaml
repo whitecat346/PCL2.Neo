@@ -17,10 +17,10 @@
                 <Border
                     Background="{TemplateBinding Background}"
                     CornerRadius="13.5"
-                    HorizontalAlignment="Center"
                     MaxHeight="27"
                     MinHeight="27"
                     Name="PanBack"
+                    HorizontalAlignment="Center"
                     VerticalAlignment="Center">
                     <StackPanel Orientation="Horizontal">
                         <Path
