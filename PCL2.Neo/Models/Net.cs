@@ -27,32 +27,25 @@ namespace PCL2.Neo.Models
                 }
             }
 
-            try
+            switch (method)
             {
-                switch (method)
+                case NetMethod.Get:
                 {
-                    case NetMethod.Get:
-                    {
-                        var response = await client.GetAsync(uri);
-                        response.EnsureSuccessStatusCode();
-                        return await response.Content.ReadAsStringAsync();
-                    }
-                    case NetMethod.Post:
-                    {
-                        if (data == null)
-                        {
-                            throw new Exception("data is null");
-                        }
-
-                        var response = await client.PostAsync(uri, new StringContent(data));
-                        response.EnsureSuccessStatusCode();
-                        return await response.Content.ReadAsStringAsync();
-                    }
+                    var response = await client.GetAsync(uri);
+                    response.EnsureSuccessStatusCode();
+                    return await response.Content.ReadAsStringAsync();
                 }
-            }
-            catch (Exception e)
-            {
-                throw;
+                case NetMethod.Post:
+                {
+                    if (data == null)
+                    {
+                        throw new Exception("data is null");
+                    }
+
+                    var response = await client.PostAsync(uri, new StringContent(data));
+                    response.EnsureSuccessStatusCode();
+                    return await response.Content.ReadAsStringAsync();
+                }
             }
 
             return string.Empty;
