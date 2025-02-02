@@ -26,20 +26,6 @@ namespace PCL2.Neo.Models.MsLogin
         public required string IdToken { get; set; }
     }
 
-    //public class XboxAuthenticatePropertiesData
-    //{
-    //    public required string AuthMethod { get; set; }
-    //    public required string SiteName { get; set; }
-    //    public required string RpsTicket { get; set; }
-    //}
-
-    //public class XboxAuthenticateData
-    //{
-    //    public required XboxAuthenticatePropertiesData Properties { get; set; }
-    //    public required string RelyingParty { get; set; }
-    //    public required string TokenType { get; set; }
-    //}
-
     public class XboxAuthenticateXuiData
     {
         public required string Uhs { get; set; }
@@ -82,25 +68,25 @@ namespace PCL2.Neo.Models.MsLogin
 
     public class SkinsItem
     {
-        public string Id { get; set; }
+        public required string Id { get; set; }
 
-        public string State { get; set; }
+        public required string State { get; set; }
 
-        public string Url { get; set; }
+        public required string Url { get; set; }
 
-        public string Variant { get; set; }
+        public required string Variant { get; set; }
 
-        public string Alias { get; set; }
+        public required string Alias { get; set; }
     }
 
     public class UserUuid
     {
-        public string Id { get; set; }
+        public required string Id { get; set; }
 
-        public string Name { get; set; }
+        public required string Name { get; set; }
 
-        public List<SkinsItem> Skins { get; set; }
+        public required List<SkinsItem> Skins { get; set; }
 
-        public List<string> Capes { get; set; }
+        public required List<string> Capes { get; set; }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Text.Json;
 
 namespace PCL2.Neo.Models
 {
@@ -56,7 +55,7 @@ namespace PCL2.Neo.Models
                 throw;
             }
 
-            return null;
+            return string.Empty;
         }
     }
 }
