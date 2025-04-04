@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
-using Avalonia.Input;
 using Avalonia.Media;
 using PCL2.Neo.Helpers;
 using PCL2.Neo.Models;

@@ -76,14 +76,20 @@ public static class TimeDateUtils
     {
         int months = span.Days / 30;
 
-        // 按时间单位从长到短判断，优先显示更大单位
-        if (months >= 12) return $"{months / 12} 年";
-        if (months >= 2) return $"{months} 个月";
+        switch (months)
+        {
+            // 按时间单位从长到短判断，优先显示更大单位
+            case >= 12:
+                return $"{months / 12} 年";
+            case >= 2:
+                return $"{months} 个月";
+        }
+
         if (span.Days >= 2) return $"{span.Days} 天";
         if (span.Hours >= 1) return $"{span.Hours} 小时";
         if (span.Minutes >= 1) return $"{span.Minutes} 分钟";
-        if (span.Seconds >= 1) return $"{span.Seconds} 秒";
-        return "1 秒"; // 处理小于1秒的情况
+
+        return span.Seconds >= 1 ? $"{span.Seconds} 秒" : "1 秒"; // 处理小于1秒的情况
     }
 
     /// <summary>
@@ -94,19 +100,44 @@ public static class TimeDateUtils
         int months = span.Days / 30;
         int remainingDays = span.Days % 30;
 
-        // 复合时间单位拼接逻辑
-        if (months >= 61) return $"{months / 12} 年";
-        if (months >= 12) return CombineUnits(months / 12, "年", months % 12, "个月");
-        if (months >= 4) return $"{months} 个月";
-        if (months >= 1) return CombineUnits(months, "个月", remainingDays, "天");
-        if (span.Days >= 4) return $"{span.Days} 天";
-        if (span.Days >= 1) return CombineUnits(span.Days, "天", span.Hours, "小时");
-        if (span.Hours >= 10) return $"{span.Hours} 小时";
-        if (span.Hours >= 1) return CombineUnits(span.Hours, "小时", span.Minutes, "分钟");
-        if (span.Minutes >= 10) return $"{span.Minutes} 分钟";
-        if (span.Minutes >= 1) return CombineUnits(span.Minutes, "分", span.Seconds, "秒");
-        if (span.Seconds >= 1) return $"{span.Seconds} 秒";
-        return "1 秒";
+        switch (months)
+        {
+            // 复合时间单位拼接逻辑
+            case >= 61:
+                return $"{months / 12} 年";
+            case >= 12:
+                return CombineUnits(months / 12, "年", months % 12, "个月");
+            case >= 4:
+                return $"{months} 个月";
+            case >= 1:
+                return CombineUnits(months, "个月", remainingDays, "天");
+        }
+
+        switch (span.Days)
+        {
+            case >= 4:
+                return $"{span.Days} 天";
+            case >= 1:
+                return CombineUnits(span.Days, "天", span.Hours, "小时");
+        }
+
+        switch (span.Hours)
+        {
+            case >= 10:
+                return $"{span.Hours} 小时";
+            case >= 1:
+                return CombineUnits(span.Hours, "小时", span.Minutes, "分钟");
+        }
+
+        switch (span.Minutes)
+        {
+            case >= 10:
+                return $"{span.Minutes} 分钟";
+            case >= 1:
+                return CombineUnits(span.Minutes, "分", span.Seconds, "秒");
+        }
+
+        return span.Seconds >= 1 ? $"{span.Seconds} 秒" : "1 秒";
     }
 
     /// <summary>

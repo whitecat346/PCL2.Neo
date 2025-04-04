@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Layout;
-using Avalonia.Media;
 using Avalonia.Styling;
 using System;
 using System.Threading;
@@ -10,14 +9,15 @@ using System.Threading.Tasks;
 
 namespace PCL2.Neo.Animations
 {
-    public class YAnimation : IAnimation
+    public class YAnimation(Animatable control, TimeSpan duration, TimeSpan delay, double value, Easing easing)
+        : IAnimation
     {
-        private CancellationTokenSource _cancellationTokenSource;
-        public Animatable Control { get; set; }
-        public TimeSpan Duration { get; set; }
-        public TimeSpan Delay { get; set; }
-        public double Value { get; set; }
-        public Easing Easing { get; set; }
+        private readonly CancellationTokenSource _cancellationTokenSource = new();
+        public Animatable Control { get; set; } = control;
+        public TimeSpan Duration { get; set; } = duration;
+        public TimeSpan Delay { get; set; } = delay;
+        public double Value { get; set; } = value;
+        public Easing Easing { get; set; } = easing;
         public bool Wait { get; set; } = false;
 
         public YAnimation(Animatable control, double value) : this(
@@ -40,35 +40,19 @@ namespace PCL2.Neo.Animations
             control, duration, TimeSpan.Zero, value, easing)
         {
         }
-        public YAnimation(Animatable control, TimeSpan duration, TimeSpan delay, double value, Easing easing)
-        {
-            Control = control;
-            Duration = duration;
-            Delay = delay;
-            Value = value;
-            Easing = easing;
-            _cancellationTokenSource = new CancellationTokenSource();
-        }
 
         public async Task RunAsync()
         {
             var control = (Layoutable)Control;
             Thickness marginOriginal = control.Margin;
-            Thickness margin;
-            switch (control.VerticalAlignment)
+            Thickness margin = control.VerticalAlignment switch
             {
-                case VerticalAlignment.Top:
-                    margin = new Thickness(control.Margin.Left, control.Margin.Top + Value, control.Margin.Right,
-                        control.Margin.Bottom);
-                    break;
-                case VerticalAlignment.Bottom:
-                    margin = new Thickness(control.Margin.Left, control.Margin.Top, control.Margin.Right,
-                        control.Margin.Bottom - Value);
-                    break;
-                default:
-                    margin = control.Margin;
-                    break;
-            }
+                VerticalAlignment.Top => new Thickness(control.Margin.Left, control.Margin.Top + Value,
+                    control.Margin.Right, control.Margin.Bottom),
+                VerticalAlignment.Bottom => new Thickness(control.Margin.Left, control.Margin.Top, control.Margin.Right,
+                    control.Margin.Bottom - Value),
+                _ => control.Margin
+            };
             var animation = new Animation
             {
                 Easing = Easing,
@@ -97,9 +81,7 @@ namespace PCL2.Neo.Animations
             };
             await animation.RunAsync(Control, _cancellationTokenSource.Token);
         }
-        public void Cancel()
-        {
-            _cancellationTokenSource.Cancel();
-        }
+
+        public void Cancel() => _cancellationTokenSource.Cancel();
     }
 }

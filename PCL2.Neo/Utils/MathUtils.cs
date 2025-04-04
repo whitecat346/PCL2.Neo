@@ -17,7 +17,7 @@ public static class MathUtils
         if (isNegative) input = input.TrimStart('-');
         long realNum = 0, scale = 1;
 
-        foreach (var digit in input.Reverse().Select(l => digits.IndexOf(l.ToString())))
+        foreach (var digit in input.Reverse().Select(l => digits.IndexOf(l.ToString(), StringComparison.Ordinal)))
         {
             realNum += digit * scale;
             scale *= fromRadix;
@@ -39,8 +39,14 @@ public static class MathUtils
     /// </summary>
     public static double MathBezier(double x, double x1, double y1, double x2, double y2, double acc = 0.01)
     {
-        if (x <= 0 || double.IsNaN(x)) return 0;
-        if (x >= 1) return 1;
+        switch (x)
+        {
+            case <= 0 or double.NaN:
+                return 0;
+            case >= 1:
+                return 1;
+        }
+
         var a = x;
         double b;
         do

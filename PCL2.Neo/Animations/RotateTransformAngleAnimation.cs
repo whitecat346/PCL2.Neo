@@ -8,15 +8,22 @@ using System.Threading.Tasks;
 
 namespace PCL2.Neo.Animations
 {
-    public class RotateTransformAngleAnimation : IAnimation
+    public class RotateTransformAngleAnimation(
+        Animatable control,
+        TimeSpan duration,
+        TimeSpan delay,
+        double? valueBefore,
+        double valueAfter,
+        Easing easing)
+        : IAnimation
     {
-        private CancellationTokenSource _cancellationTokenSource;
-        public Animatable Control { get; set; }
-        public TimeSpan Duration { get; set; }
-        public TimeSpan Delay { get; set; }
-        public double? ValueBefore { get; set; }
-        public double ValueAfter { get; set; }
-        public Easing Easing { get; set; }
+        private readonly CancellationTokenSource _cancellationTokenSource = new();
+        public Animatable Control { get; set; } = control;
+        public TimeSpan Duration { get; set; } = duration;
+        public TimeSpan Delay { get; set; } = delay;
+        public double? ValueBefore { get; set; } = valueBefore;
+        public double ValueAfter { get; set; } = valueAfter;
+        public Easing Easing { get; set; } = easing;
         public bool Wait { get; set; } = false;
 
         public RotateTransformAngleAnimation(Animatable control, double valueAfter) : this(
@@ -63,16 +70,6 @@ namespace PCL2.Neo.Animations
             control, duration, TimeSpan.Zero, valueBefore, valueAfter, easing)
         {
         }
-        public RotateTransformAngleAnimation(Animatable control, TimeSpan duration, TimeSpan delay, double? valueBefore, double valueAfter, Easing easing)
-        {
-            Control = control;
-            Duration = duration;
-            Delay = delay;
-            ValueBefore = valueBefore;
-            ValueAfter = valueAfter;
-            Easing = easing;
-            _cancellationTokenSource = new CancellationTokenSource();
-        }
 
         public async Task RunAsync()
         {
@@ -104,9 +101,7 @@ namespace PCL2.Neo.Animations
             };
             await animation.RunAsync(Control, _cancellationTokenSource.Token);
         }
-        public void Cancel()
-        {
-            _cancellationTokenSource.Cancel();
-        }
+
+        public void Cancel() => _cancellationTokenSource.Cancel();
     }
 }

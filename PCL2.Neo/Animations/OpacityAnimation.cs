@@ -10,7 +10,7 @@ namespace PCL2.Neo.Animations
 {
     public class OpacityAnimation : IAnimation
     {
-        private CancellationTokenSource _cancellationTokenSource;
+        private readonly CancellationTokenSource _cancellationTokenSource;
         public Animatable Control { get; set; }
         public TimeSpan Duration { get; set; }
         public TimeSpan Delay { get; set; }
@@ -105,9 +105,6 @@ namespace PCL2.Neo.Animations
             await animation.RunAsync(Control, _cancellationTokenSource.Token);
         }
 
-        public void Cancel()
-        {
-            _cancellationTokenSource.Cancel();
-        }
+        public void Cancel() => _cancellationTokenSource.Cancel();
     }
 }

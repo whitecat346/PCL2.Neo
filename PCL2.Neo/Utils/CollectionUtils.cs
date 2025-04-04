@@ -1,27 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace PCL2.Neo.Utils;
 
 public static class CollectionUtils
 {
-    public delegate bool CompareThreadStart<T>(T left, T right);
-
-    private class MyEqual<T>(CompareThreadStart<T> method) : IEqualityComparer<T>
-    {
-        public bool Equals(T? x, T? y)
-        {
-            return method(x, y);
-        }
-
-        public int GetHashCode([DisallowNull] T obj)
-        {
-            return obj.GetHashCode();
-        }
-    }
-
     /// <summary>
     /// 将元素与 List 的混合体拆分为元素组。
     /// </summary>

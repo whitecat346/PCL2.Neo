@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
 using Avalonia.Layout;
-using Avalonia.Media;
 using Avalonia.Styling;
 using System;
 using System.Threading;
@@ -10,14 +9,15 @@ using System.Threading.Tasks;
 
 namespace PCL2.Neo.Animations
 {
-    public class XAnimation : IAnimation
+    public class XAnimation(Animatable control, TimeSpan duration, TimeSpan delay, double value, Easing easing)
+        : IAnimation
     {
-        private CancellationTokenSource _cancellationTokenSource;
-        public Animatable Control { get; set; }
-        public TimeSpan Duration { get; set; }
-        public TimeSpan Delay { get; set; }
-        public double Value { get; set; }
-        public Easing Easing { get; set; }
+        private readonly CancellationTokenSource _cancellationTokenSource = new();
+        public Animatable Control { get; set; } = control;
+        public TimeSpan Duration { get; set; } = duration;
+        public TimeSpan Delay { get; set; } = delay;
+        public double Value { get; set; } = value;
+        public Easing Easing { get; set; } = easing;
         public bool Wait { get; set; } = false;
 
         public XAnimation(Animatable control, double value) : this(
@@ -39,15 +39,6 @@ namespace PCL2.Neo.Animations
         public XAnimation(Animatable control, TimeSpan duration, double value, Easing easing) : this(
             control, duration, TimeSpan.Zero, value, easing)
         {
-        }
-        public XAnimation(Animatable control, TimeSpan duration, TimeSpan delay, double value, Easing easing)
-        {
-            Control = control;
-            Duration = duration;
-            Delay = delay;
-            Value = value;
-            Easing = easing;
-            _cancellationTokenSource = new CancellationTokenSource();
         }
 
         public async Task RunAsync()
@@ -97,9 +88,7 @@ namespace PCL2.Neo.Animations
             };
             await animation.RunAsync(Control, _cancellationTokenSource.Token);
         }
-        public void Cancel()
-        {
-            _cancellationTokenSource.Cancel();
-        }
+
+        public void Cancel() => _cancellationTokenSource.Cancel();
     }
 }

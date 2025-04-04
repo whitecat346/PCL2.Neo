@@ -66,7 +66,7 @@ public class Logger
 
     public static void InitLogger(string logFilePath)
     {
-        if (_instance == null) _instance = new Logger(logFilePath);
+        _instance ??= new Logger(logFilePath);
     }
 
     public static Logger GetInstance()
@@ -126,10 +126,9 @@ public class Logger
     {
         if (_logStream != null)
         {
-            string? log;
             while (!_logQueue.IsEmpty)
             {
-                if (_logQueue.TryDequeue(out log))
+                if (_logQueue.TryDequeue(out var log))
                 {
                     _logStream.Write(log);
                 }
@@ -145,12 +144,26 @@ public class Logger
     {
         switch (level)
         {
-            case LogLevel.Developer: _developerLogDelegate = logDelegate; break;
-            case LogLevel.Debug: _debugLogDelegate = logDelegate; break;
-            case LogLevel.Hint: _hintLogDelegate = logDelegate; break;
-            case LogLevel.Msgbox: _msgboxLogDelegate = logDelegate; break;
-            case LogLevel.Assert: _assertLogDelegate = logDelegate; break;
-            case LogLevel.Feedback: _feedbackLogDelegate = logDelegate; break;
+            case LogLevel.Developer:
+                _developerLogDelegate = logDelegate;
+                break;
+            case LogLevel.Debug:
+                _debugLogDelegate = logDelegate;
+                break;
+            case LogLevel.Hint:
+                _hintLogDelegate = logDelegate;
+                break;
+            case LogLevel.Msgbox:
+                _msgboxLogDelegate = logDelegate;
+                break;
+            case LogLevel.Assert:
+                _assertLogDelegate = logDelegate;
+                break;
+            case LogLevel.Feedback:
+                _feedbackLogDelegate = logDelegate;
+                break;
+            case LogLevel.Normal: break;
+            default: break;
         }
     }
 
@@ -166,8 +179,12 @@ public class Logger
         switch (level)
         {
 #if DEBUG
-            case LogLevel.Developer: _developerLogDelegate.Invoke(msg); break;
-            case LogLevel.Debug: _debugLogDelegate.Invoke(msg); break;
+            case LogLevel.Developer:
+                _developerLogDelegate.Invoke(msg);
+                break;
+            case LogLevel.Debug:
+                _debugLogDelegate.Invoke(msg);
+                break;
 #else
             case LogLevel.Developer: break;
             case LogLevel.Debug:
@@ -185,6 +202,10 @@ public class Logger
                 break;
             case LogLevel.Assert:
                 _assertLogDelegate.Invoke(msg);
+                break;
+            case LogLevel.Normal:
+                break;
+            default:
                 break;
         }
     }

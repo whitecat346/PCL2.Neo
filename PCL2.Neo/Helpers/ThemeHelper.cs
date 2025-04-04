@@ -78,7 +78,7 @@ public class ThemeHelper
         //    lightAdjust = 1;
         //}
 
-        // optimize: deplicating code
+        // optimize: duplicating code
         if (themeVariant == ThemeVariant.Dark)
         {
             lightAdjust = 0.1f;
