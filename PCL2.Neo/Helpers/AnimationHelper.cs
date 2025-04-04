@@ -10,7 +10,7 @@ namespace PCL2.Neo.Helpers;
 public class AnimationHelper(List<IAnimation> animations)
 {
     public List<IAnimation> Animations { get; set; } = animations;
-    public List<Task> Tasks { get; } = new List<Task>();
+    public List<Task> Tasks { get; } = [];
     public bool Loop { get; set; } = false;
 
     public AnimationHelper() : this([]){}
@@ -21,12 +21,13 @@ public class AnimationHelper(List<IAnimation> animations)
 
         if (Loop)
         {
-            while (true)
+            while (Loop)
             {
                 Tasks.Clear();
                 await RunAsyncCore();
-                if (!Loop) return;
             }
+
+            return;
         }
 
         await RunAsyncCore();
@@ -37,34 +38,28 @@ public class AnimationHelper(List<IAnimation> animations)
         // 根据 Wait 进行动画分组
         var groupedAnimations = new List<List<IAnimation>>();
         var currentGroup = new List<IAnimation>();
-        foreach (IAnimation animation in Animations)
+        foreach (var animation in Animations)
         {
-            if (animation.Wait)
+            if (animation.Wait && currentGroup.Count > 0)
             {
-                if (currentGroup.Count > 0)
-                {
-                    groupedAnimations.Add(new List<IAnimation>(currentGroup));
-                    currentGroup.Clear();
-                    continue;
-                }
-                currentGroup.Add(animation);
+                groupedAnimations.Add([..currentGroup]);
+                currentGroup.Clear();
+                continue;
             }
-            else
-            {
-                currentGroup.Add(animation);
-            }
+
+            currentGroup.Add(animation);
         }
 
         if (currentGroup.Count > 0)
         {
-            groupedAnimations.Add(new List<IAnimation>(currentGroup));
+            groupedAnimations.Add([..currentGroup]);
         }
 
         currentGroup.Clear();
 
-        foreach (List<IAnimation> list in groupedAnimations)
+        foreach (var list in groupedAnimations)
         {
-            foreach (IAnimation animation in list)
+            foreach (var animation in list)
             {
                 Tasks.Add(animation.RunAsync());
             }
@@ -75,7 +70,7 @@ public class AnimationHelper(List<IAnimation> animations)
 
     public void Cancel()
     {
-        foreach (IAnimation animation in Animations)
+        foreach (var animation in Animations)
         {
             animation.Cancel();
         }
