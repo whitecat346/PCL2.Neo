@@ -157,7 +157,7 @@ public class DownloadTest
             Directory.Delete(Path.Combine(CachePath, "downloadtest"), true);
         Directory.CreateDirectory(Path.Combine(CachePath, "downloadtest"));
         using var downloader = new Downloader(MaxThreads);
-        await downloader.Download(TestCases.Select(x => new DownloadReceipt
+        await downloader.DownloadAsync(TestCases.Select(x => new DownloadReceipt
         {
             SourceUrl = $"http://127.0.0.1:8000/download/hash/{x.Key}",
             DestinationPath = Path.Combine(CachePath, $"downloadtest/{x.Key}"),
@@ -197,7 +197,7 @@ public class DownloadTest
         });
         var stopwatch = new Stopwatch();
         stopwatch.Start();
-        await downloader.Download(TestCases.Select(x => new DownloadReceipt
+        await downloader.DownloadAsync(TestCases.Select(x => new DownloadReceipt
         {
             SourceUrl = $"http://127.0.0.1:8000/download/hash/{x.Key}",
             DestinationPath = Path.Combine(CachePath, $"downloadtest/{x.Key}"),
@@ -281,7 +281,7 @@ public class DownloadTest
         });
         var stopwatch = new Stopwatch();
         stopwatch.Start();
-        await downloader.Download(TestCases.Select(x => new DownloadReceipt
+        await downloader.DownloadAsync(TestCases.Select(x => new DownloadReceipt
         {
             SourceUrl = $"http://127.0.0.1:8000/download/hash/{x.Key}",
             DestinationPath = Path.Combine(CachePath, $"downloadtest/{x.Key}"),
