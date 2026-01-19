@@ -57,6 +57,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Controls\SvgButton.axaml.cs">
+      <DependentUpon>SvgButton.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Pages\HomeView.axaml.cs">
       <DependentUpon>HomeView.axaml</DependentUpon>
     </Compile>

@@ -2,7 +2,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:PCL.Neo.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="PCL.Neo.HomeView">
-  <TextBlock Text="Hello World!"/>
+             x:Class="PCL.Neo.Views.Pages.HomeView">
+    <StackPanel Orientation="Vertical" Spacing="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <TextBlock Text="自定义按钮控件示例" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" />
+
+        <!-- 正常状态按钮 -->
+        <controls:SvgButton ButtonText="正常" />
+
+        <!-- 悬停状态示例（运行时可见） -->
+        <controls:SvgButton ButtonText="悬停" />
+
+        <!-- 按下状态示例（运行时可见） -->
+        <controls:SvgButton ButtonText="按下" />
+
+        <!-- 禁用状态按钮 -->
+        <controls:SvgButton ButtonText="禁用" IsEnabled="False" />
+
+        <!-- 自定义颜色按钮 -->
+        <controls:SvgButton
+            ButtonText="自定义"
+            SvgBackgroundColor="#2E7D32"
+            TextColor="White" />
+
+        <!-- 自定义文字大小按钮 -->
+        <controls:SvgButton
+            ButtonText="大号"
+            TextSize="30" />
+    </StackPanel>
 </UserControl>

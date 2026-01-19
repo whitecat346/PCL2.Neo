@@ -1,0 +1,42 @@
+<Button xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="using:PCL.Neo.Controls" x:Class="PCL.Neo.Controls.SvgButton" Width="150" Height="50" BorderThickness="0" CornerRadius="30">
+    <Button.Styles>
+        <Style Selector="local|SvgButton">
+            <!-- 正常状态样式 -->
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                </Setter.Value>
+            </Setter>
+
+            <!-- 悬停状态样式 -->
+            <Style Selector="local|SvgButton:pointerover">
+            </Style>
+
+            <!-- 按下状态样式 -->
+            <Style Selector="local|SvgButton:pressed">
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform ScaleX="0.98" ScaleY="0.98" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- 禁用状态样式 -->
+            <Style Selector="local|SvgButton:disabled">
+                <Setter Property="Cursor" Value="NotAllowed" />
+            </Style>
+        </Style>
+    </Button.Styles>
+
+    <Grid>
+        <!-- SVG图片区域 -->
+        <Border x:Name="SvgContainer" Margin="10,8,10,8" Width="35" Height="35" CornerRadius="6">
+            <TextBlock x:Name="SvgContentPresenter" Text="" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        </Border>
+
+        <!-- 文字区域 -->
+        <TextBlock x:Name="TextContent" Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SvgButton}}, Path=ButtonText}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="55,0,0,0" FontSize="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SvgButton}}, Path=TextSize}" />
+    </Grid>
+</Button>

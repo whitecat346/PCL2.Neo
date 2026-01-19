@@ -1,5 +1,8 @@
 namespace PCL.Neo.ViewModels.Pages;
 
-public class HomeViewModel() : PageViewModelBase(280)
+public partial class HomeViewModel : PageViewModelBase
 {
+    public HomeViewModel(double defaultWidth = 250) : base(defaultWidth)
+    {
+    }
 }

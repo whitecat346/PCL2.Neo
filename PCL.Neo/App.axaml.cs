@@ -16,12 +16,13 @@ public class App : Application
         AvaloniaXamlLoader.Load(this);
     }
 
-    private static ServiceProvider ConfigureServices()
-    {
-        return new ServiceCollection()
+    private static ServiceProvider ConfigureServices() => new ServiceCollection()
+            // Services
+            .AddSingleton<Services.NavigationService>()
+            // UI
             .AddTransient<MainWindowViewModel>()
+            .AddTransient<ViewModels.Pages.HomeViewModel>()
             .BuildServiceProvider();
-    }
 
     public override void OnFrameworkInitializationCompleted()
     {
@@ -39,7 +40,7 @@ public class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
-    private void DisableAvaloniaDataAnnotationValidation()
+    private static void DisableAvaloniaDataAnnotationValidation()
     {
         // Get an array of plugins to remove
         var dataValidationPluginsToRemove =

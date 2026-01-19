@@ -1,12 +1,8 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using PCL.Neo.ViewModels;
-using PageViewModelBase = PCL.Neo.ViewModels.Pages.PageViewModelBase;
 
-namespace PCL.Neo;
+namespace PCL.Neo.Views.Pages;
 
-public partial class HomeView : PageViewModelBase
+public partial class HomeView : UserControl
 {
     public HomeView()
     {
