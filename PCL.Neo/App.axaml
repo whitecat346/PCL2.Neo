@@ -3,7 +3,6 @@
     x:Class="PCL.Neo.App"
     xmlns="https://github.com/avaloniaui"
     xmlns:local="using:PCL.Neo"
-    xmlns:utils="using:PCL.Neo.Utils"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.DataTemplates>
         <local:ViewLocator />
@@ -11,8 +10,6 @@
 
     <Application.Resources>
         <ResourceDictionary>
-            <utils:BoolToOnlineStatusConverter x:Key="BoolToOnlineStatusConverter" />
-
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="avares://PCL.Neo/Assets/Language/zh-CN.axaml" />
                 <ResourceInclude Source="avares://PCL.Neo/Colors.axaml" />
@@ -26,7 +23,6 @@
     <Application.Styles>
         <FluentTheme />
 
-        <StyleInclude Source="avares://PCL.Neo/Styles/MyControlStyles.axaml" />
         <StyleInclude Source="avares://PCL.Neo/Styles/CustomStyles.axaml" />
         <StyleInclude Source="avares://PCL.Neo/Styles/Icons.axaml" />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />

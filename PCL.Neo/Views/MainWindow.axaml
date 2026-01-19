@@ -1,0 +1,77 @@
+<Window
+    Background="Transparent"
+    Height="500"
+    MinHeight="470"
+    MinWidth="810"
+    SystemDecorations="None"
+    Title="PCL.Neo"
+    TransparencyLevelHint="Transparent"
+    Width="850"
+    WindowStartupLocation="CenterScreen"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d"
+    xmlns:vm="using:PCL.Neo.ViewModels"
+    x:Class="PCL.Neo.Views.MainWindow"
+    x:DataType="vm:MainWindowViewModel"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Window.KeyBindings>
+        <KeyBinding Gesture="Alt+Left" Command="{Binding GoBackCommand}"></KeyBinding>
+        <KeyBinding Gesture="Alt+Right" Command="{Binding GoForwardCommand}"></KeyBinding>
+    </Window.KeyBindings>
+
+    <Grid RowDefinitions="Auto, *">
+        <!-- Level 1: 顶部主导航栏 -->
+        <Border Grid.Row="0" Height="50" Background="#202020">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <!--<Button Command="{Binding NavigateHomeCommand}" Content="主页"/>-->
+                <!--<Button Command="{Binding NavigateSpecialCommand}" Content="特殊功能"/>-->
+            </StackPanel>
+        </Border>
+
+        <!-- Level 2: 左右分栏区域 -->
+        <!-- 注意：这里绑定的是 NavigationService.CurrentPage -->
+        <Grid Grid.Row="1"
+              ColumnDefinitions="Auto, *"
+              DataContext="{Binding NavService.CurrentPage}">
+            
+        <!--     左侧栏容器：宽度绑定 SidebarWidth，并开启过渡动画 -->
+            <Border Grid.Column="0" 
+                    Width="{Binding SidebarWidth}" 
+                    Background="#303030"
+                    ClipToBounds="True"><!--  防止动画过程中内容溢出 -->
+                
+                 <!--宽度动画定义--> 
+                <Border.Transitions>
+                    <Transitions>
+                        <DoubleTransition Property="Width" 
+                                          Duration="0:0:0.4" 
+                                          Easing="CubicEaseOut"/>
+                    </Transitions>
+                </Border.Transitions>
+
+                 <!--左侧内容渲染器 
+                 当 LeftSidebar 属性变化时，Avalonia 会去 DataTemplates 找对应的 View -->
+                <TransitioningContentControl Content="{Binding LeftSidebar}">
+                    <TransitioningContentControl.PageTransition>
+                        <CrossFade Duration="0:0:0.2"/>
+                    </TransitioningContentControl.PageTransition>
+                </TransitioningContentControl>
+            </Border>
+
+             <!--右侧主内容容器--> 
+            <TransitioningContentControl Grid.Column="1" 
+                                         Content="{Binding RightContent}"
+                                         Padding="20">
+                <TransitioningContentControl.PageTransition>
+                    <PageSlide Duration="0:0:0.3" Orientation="Vertical"/>
+                </TransitioningContentControl.PageTransition>
+            </TransitioningContentControl>
+        </Grid>
+    </Grid>
+    
+</Window>

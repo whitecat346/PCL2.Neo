@@ -1,6 +1,5 @@
 using Avalonia;
 using Avalonia.Media;
-using System;
 using System.Text;
 
 namespace PCL.Neo;
